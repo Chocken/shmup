@@ -1,0 +1,24 @@
+	//SDL_Surface* sprite = Sprite::Load(const_cast<char *>("marker.png"), false);
+
+	//Sprite::Draw(game->GetScreen(), sprite, GameObjects::Instance()->playerShip.Center().x, GameObjects::Instance()->playerShip.Center().y);	
+
+	/*Sprite::Draw(game->GetScreen(), sprite, GameObjects::Instance()->playerShip->CollisionCenter().x - GameObjects::Instance()->playerShip->collisionWidth/2, GameObjects::Instance()->playerShip->CollisionCenter().y - GameObjects::Instance()->playerShip->collisionHeight/2);
+
+	Sprite::Draw(game->GetScreen(), sprite, GameObjects::Instance()->playerShip->CollisionCenter().x + GameObjects::Instance()->playerShip->collisionWidth/2, GameObjects::Instance()->playerShip->CollisionCenter().y - GameObjects::Instance()->playerShip->collisionHeight/2);
+
+	Sprite::Draw(game->GetScreen(), sprite, GameObjects::Instance()->playerShip->CollisionCenter().x + GameObjects::Instance()->playerShip->collisionWidth/2, GameObjects::Instance()->playerShip->CollisionCenter().y + GameObjects::Instance()->playerShip->collisionHeight/2);
+
+	Sprite::Draw(game->GetScreen(), sprite, GameObjects::Instance()->playerShip->CollisionCenter().x - GameObjects::Instance()->playerShip->collisionWidth/2, GameObjects::Instance()->playerShip->CollisionCenter().y + GameObjects::Instance()->playerShip->collisionHeight/2);*/
+
+			SDL_Surface* sprite = Sprite::Load(const_cast<char *>("marker.png"), false);
+			Sprite::Draw(screen, sprite, enemyIter->CollisionCenter().x, enemyIter->CollisionCenter().y);
+			Sprite::Draw(screen, sprite, enemyIter->CollisionCenter().x - enemyIter->collisionWidth/2, enemyIter->CollisionCenter().y);
+			Sprite::Draw(screen, sprite, enemyIter->CollisionCenter().x + enemyIter->collisionWidth/2, enemyIter->CollisionCenter().y);
+			Sprite::Draw(screen, sprite, enemyIter->CollisionCenter().x, enemyIter->CollisionCenter().y - enemyIter->collisionHeight/2);
+			Sprite::Draw(screen, sprite, enemyIter->CollisionCenter().x, enemyIter->CollisionCenter().y + enemyIter->collisionHeight/2);
+
+			/*Sprite::Draw(screen, sprite, projectileIter->CollisionCenter().x, projectileIter->CollisionCenter().y);	
+			Sprite::Draw(screen, sprite, rect.topLeft.x, rect.topLeft.y);
+			Sprite::Draw(screen, sprite, rect.topRight.x, rect.topRight.y);
+			Sprite::Draw(screen, sprite, rect.bottomLeft.x, rect.bottomLeft.y);
+			Sprite::Draw(screen, sprite, rect.bottomRight.x, rect.bottomRight.y);*/

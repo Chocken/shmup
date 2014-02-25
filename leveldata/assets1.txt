@@ -1,0 +1,12 @@
+background bg3.png 0
+playerShip NewShip.png 1
+blackScreen blackScreen.png 0
+explosions explosions.png 1
+asteroid asteroid.png 1
+projectile projectile.png 1
+enemy1 ship4.png 1
+lazer lazer.png 1
+lazer2 lazer.png 1
+purpleBullet purpleBullet.png 1
+boss1 Boss1.png 1
+smallexplosion smallexplosion.png 1
