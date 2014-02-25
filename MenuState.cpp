@@ -68,7 +68,7 @@ void MenuState::Draw(Game* game)
 {	
 	Sprite::Draw(game->GetScreen(), menuSprite, 0, 0);
 
-	textRenderer.Draw(game->GetScreen(),const_cast<char *>("SPACE TERRITORY ARBALEST"), 75, 300);
+	textRenderer.Draw(game->GetScreen(),const_cast<char *>("CHANTICLEER HEGEMONY 2"), 75, 300);
 
 	textRenderer.Draw(game->GetScreen(),const_cast<char *>("Press space game to initation"), 30, 400);
 	

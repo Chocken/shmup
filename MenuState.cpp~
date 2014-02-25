@@ -47,8 +47,7 @@ void MenuState::HandleEvents(Game* game)
 				 switch(event.key.keysym.sym)
 				{
 
-				 case SDLK_SPACE:
-						printf("space pressed\n");
+				 case SDLK_SPACE:			
 					  game->ChangeState(PlayState::Instance());						
 					  break;
 			 	}
