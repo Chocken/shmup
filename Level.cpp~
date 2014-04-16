@@ -38,7 +38,7 @@ void Level::Clean()
 	GameObjects::Instance()->projectiles.clear();
 	GameObjects::Instance()->explosions.clear();
 	GameObjects::Instance()->enemyProjectiles.clear();
-	//objFactory.Clean();	
+	objFactory.Clean();	
 }
 
 void Level::Pause()
