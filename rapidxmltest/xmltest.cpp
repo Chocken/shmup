@@ -1,0 +1,36 @@
+// my first program in C++
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include "rapidxml.hpp"
+using namespace rapidxml;
+
+int main()
+{
+	xml_document<> doc;
+	std::ifstream file("xml_file.xml");
+	std::stringstream buffer;
+	buffer << file.rdbuf();
+	file.close();
+	std::string content(buffer.str());
+	doc.parse<0>(&content[0]);
+
+	xml_node<> *pRoot = doc.first_node();
+	
+	for(xml_node<> *pNode=pRoot->first_node("node"); pNode; 			pNode=pNode->next_sibling())	
+	{
+		xml_attribute<> *pAttr = pNode->first_attribute();
+		std::string strValue = pAttr->value();
+		std::cout << strValue << std::endl;
+		for(xml_node<> *pSubNode=pNode->first_node("node"); 			pSubNode; pSubNode=pSubNode->next_sibling())
+		{
+			std::string nodeStr = pSubNode->value();
+			std::cout << nodeStr << std::endl;
+			xml_attribute<> *pAttr = pSubNode->first_attribute();
+			std::string strValue = pAttr->value();
+			std::cout << strValue << std::endl;
+		}
+	}
+
+	
+}
