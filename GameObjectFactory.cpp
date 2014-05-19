@@ -11,8 +11,12 @@
 #include "LazerWeapon.h"
 #include "SpreadWeapon.h"
 #include "SpreadWeapon2.h"
+#include "rapidxml.hpp"
+#include "rapidxml_utils.hpp"
 #include <fstream>
+#include <sstream>
 #include <memory>
+using namespace rapidxml;
 
 
 
@@ -213,25 +217,21 @@ void GameObjectFactory::GetEnemySpec(std::string fileName)
 void GameObjectFactory::GetAssets(std::string fileName)
 {
 	std::ifstream myfile(fileName);
-	std::string line;
-	std::vector<std::string> words;
+	
+	file<> file(const_cast<char *>(fileName.c_str()));
+	xml_document<> doc;
+	doc.parse<0>(file.data());
+	xml_node<> *pRoot = doc.first_node();
+	
+	for(xml_node<> *pSubNode=pRoot->first_node("texture"); pSubNode; pSubNode=pSubNode->next_sibling())	
+	{	
+		xml_attribute<> *nameAttr = pSubNode->first_attribute("name");		
+		xml_attribute<> *imageAttr = pSubNode->first_attribute("imagefile");	
+		xml_attribute<> *transparentAttr = pSubNode->first_attribute("transparent");		
 
-  if (myfile.is_open())
-  {
-  	while ( getline (myfile,line) )
-  	{
-	 		words = split(line,' ');
-
-			std::string tmp = words[1];
-			char tab2[1024];	
-			strncpy(tab2, tmp.c_str(), sizeof(tab2));
-			tab2[sizeof(tab2) - 1] = 0;
-
-			SDL_Surface* surface = Sprite::Load(const_cast<char *>(tab2), atoi(words[2].c_str()));
-			spriteMap[words[0]] = surface;			
-   	}
-   	myfile.close();
-  }	
+		SDL_Surface* surface = Sprite::Load(const_cast<char *>(imageAttr->value()), atoi(transparentAttr->value()));
+		spriteMap[nameAttr->value()] = surface;
+	}
 }
 
 std::vector<std::string> GameObjectFactory::split(std::string input, char delim)

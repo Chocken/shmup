@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<textures>
+   	<texture name="background" imagefile ="bg3.png" transparent="0"/>
+	<texture name="playerShip" imagefile ="NewShip.png" transparent="1"/>
+   	<texture name="blackScreen" imagefile ="blackScreen.png" transparent="0"/>
+	<texture name="explosions" imagefile ="explosions.png" transparent="1"/>
+	<texture name="asteroid" imagefile ="asteroid.png" transparent="1"/>
+	<texture name="projectile" imagefile ="projectile.png" transparent="1"/>
+	<texture name="enemy1" imagefile ="ship4.png" transparent="1"/>
+	<texture name="lazer" imagefile ="lazer.png" transparent="1"/>
+	<texture name="lazer2" imagefile ="lazer.png" transparent="1"/>
+	<texture name="purpleBullet" imagefile ="purpleBullet.png" transparent="1"/>
+	<texture name="boss1" imagefile ="Boss1.png" transparent="1"/>
+	<texture name="smallexplosion" imagefile ="smallexplosion.png" transparent="1"/>
+</textures>

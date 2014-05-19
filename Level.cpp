@@ -19,7 +19,7 @@ GameObjects GameObjects::m_GameObjects;
 void Level::Init(int levelno)
 {		
 	levelFinished = false;	
-	objFactory.Init("assets"+boost::lexical_cast<std::string>(levelno)+".txt","enemies"+boost::lexical_cast<std::string>(levelno)+".txt");
+	objFactory.Init("assets"+boost::lexical_cast<std::string>(levelno)+".xml","enemies"+boost::lexical_cast<std::string>(levelno)+".txt");
 	printf("objectfactory initialized\n");
 	background = objFactory.CreateBackground();
 	PlayerShip playerShip = objFactory.CreatePlayerShip();
