@@ -8,7 +8,7 @@ Vector2D::Vector2D(float X, float Y)
 	y = Y;
 }
 
-Vector2D::Vector2D() {}
+Vector2D::Vector2D() {x=0;y=0;}
 
 Vector2D& Vector2D::Set(float X, float Y)
 {

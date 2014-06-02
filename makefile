@@ -39,7 +39,7 @@ LevelFactory.o: LevelFactory.cpp LevelFactory.h Level.h Background.h PlayerShip.
 Level.o : Level.cpp Level.h Background.h PlayerShip.h BlackScreen.h PlayerShip.h LevelFactory.h GameObjectFactory.h Explosion.h Timer.h Game.h DrawableObject.h GameObjects.h Enemy.h BasicEnemy.h
 	$(CC) $(CFLAGS) Level.cpp
 
-GameObjectFactory.o: GameObjectFactory.cpp GameObjectFactory.h Sprite.h Background.h PlayerShip.h Explosion.h Vector2D.h DrawableObject.h IUpdateable.h Obstacle.h StraightWeapon.h LazerWeapon.h BasicEnemy.h SpreadWeapon.h SpecFactory.h
+GameObjectFactory.o: GameObjectFactory.cpp GameObjectFactory.h Sprite.h Background.h PlayerShip.h Explosion.h Vector2D.h DrawableObject.h IUpdateable.h Obstacle.h StraightWeapon.h LazerWeapon.h BasicEnemy.h SpreadWeapon.h SpecFactory.h EnemySpec.h
 	$(CC) $(CFLAGS) GameObjectFactory.cpp
 
 Explosion.o: Explosion.cpp Explosion.h DrawableObject.h Timer.h Sprite.h

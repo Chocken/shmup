@@ -19,7 +19,7 @@ GameObjects GameObjects::m_GameObjects;
 void Level::Init(int levelno)
 {		
 	levelFinished = false;	
-	objFactory.Init("assets"+boost::lexical_cast<std::string>(levelno)+".txt","enemies"+boost::lexical_cast<std::string>(levelno)+".xml");
+	objFactory.Init("assets"+boost::lexical_cast<std::string>(levelno)+".xml","enemies"+boost::lexical_cast<std::string>(1)+".xml");
 	printf("objectfactory initialized\n");
 	background = objFactory.CreateBackground();
 	PlayerShip playerShip = objFactory.CreatePlayerShip();
@@ -29,7 +29,7 @@ void Level::Init(int levelno)
 	score = TextRenderer(const_cast<char *>("manaspc.ttf"),28, textColor);
 	timer.start();
 	explosionTimer.start();
-	printf("level initialized\n");
+
 }
 
 void Level::Clean()
@@ -79,13 +79,16 @@ void Level::HandleEvents(SDL_Event event, Game* game)
 
 void Level::Update()
 {
+
 	HandleCollisions(GameObjects::Instance()->enemies, GameObjects::Instance()->playerShip);
+
 	HandleCollisions(GameObjects::Instance()->enemyProjectiles, GameObjects::Instance()->playerShip); 
 	HandleCollisions(GameObjects::Instance()->projectiles,GameObjects::Instance()->enemies);		
 
 	background.Update(timer.get_ticks());
 	GameObjects::Instance()->playerShip.Update(timer.get_ticks());	
-	
+
+
 	Update(GameObjects::Instance()->enemies, timer.get_ticks());
 	Update(GameObjects::Instance()->projectiles,timer.get_ticks());
 	Update(GameObjects::Instance()->enemyProjectiles,timer.get_ticks());
@@ -99,7 +102,8 @@ void Level::Draw(Game* game)
 {
 	background.Draw(game->GetScreen());
 	
-	Draw(GameObjects::Instance()->enemies, game->GetScreen());	
+
+	Draw(GameObjects::Instance()->enemies, game->GetScreen());
 	Draw(GameObjects::Instance()->projectiles, game->GetScreen());
 	Draw(GameObjects::Instance()->enemyProjectiles, game->GetScreen());
 	GameObjects::Instance()->playerShip.Draw(game->GetScreen());
@@ -121,7 +125,7 @@ void Level::Draw(boost::ptr_list<Enemy>& enemies, SDL_Surface* screen)
 	boost::ptr_list<Enemy>::iterator enemyIter = enemies.begin();
 
 	while (enemyIter != enemies.end())
-	{			
+	{					
 			enemyIter->Draw(screen);		
 			++enemyIter;				
 	}
@@ -179,10 +183,12 @@ void Level::Update(boost::ptr_list<Projectile>& projectiles, Uint32 deltaTicks)
 
 void Level::Update(boost::ptr_list<Enemy>& enemies, Uint32 deltaTicks)
 {	
+
 	boost::ptr_list<Enemy>::iterator enemyIter = enemies.begin();
 
 	while (enemyIter != enemies.end())
 	{
+
 		if(enemyIter->GetIsActive() == false)
 		{					
 			enemyIter = enemies.erase(enemyIter);
@@ -191,8 +197,10 @@ void Level::Update(boost::ptr_list<Enemy>& enemies, Uint32 deltaTicks)
 		{
 			enemyIter->Update(deltaTicks);	
 		}
+	
 		++enemyIter;				
 	}	
+
 }
 
 void Level::HandleCollisions(boost::ptr_list<Enemy>& gameObjects, PlayerShip& playerShip)

@@ -24,14 +24,13 @@ void BasicEnemy::Update(Uint32 deltaTicks)
 	{
 		isActive = false;
 	}		
-
+	
 	behaviour->Update(deltaTicks);
 	
 	if(isRed){ sheetVector.x = width; }
 	else { sheetVector.x = 0; }
 
-	if(flashTimer.get_ticks() > 10) {isRed = false; flashTimer.stop();}
-
+	if(flashTimer.get_ticks() > 10) {isRed = false; flashTimer.stop();}	
 }
 
 void BasicEnemy::Draw(SDL_Surface* surface)

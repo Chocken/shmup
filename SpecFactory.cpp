@@ -49,32 +49,3 @@ GameObjectSpec SpecFactory::CreateLazer2ProjectileSpec()
 	return projectileSpec;
 }
 
-GameObjectSpec SpecFactory::CreateSpecFromVect(const std::vector<std::string>& data)
-{
-	GameObjectSpec spec;
-	if (data[13] == "CIRC") {spec.collisionType = CIRC;}
-	else if (data[13] == "RECT"){spec.collisionType = RECT;}
-	else {printf("no collision type found\n");}
-
-	spec.width = atof(data[2].c_str());
-	spec.height = atof(data[3].c_str());
-	spec.collisionWidth = atof(data[4].c_str());
-	spec.collisionHeight = atof(data[5].c_str());
-	spec.collisionOffset = Vector2D(atof(data[6].c_str()),atof(data[7].c_str()));
-
-	return spec;
-}
-
-BasicEnemySpec SpecFactory::CreateEnemySpecFromVect(const std::vector<std::string>& data)
-{
-	BasicEnemySpec spec;
-	spec.gameObjectSpec = CreateSpecFromVect(data);
-	spec.explFactoryFrames = atof(data[8].c_str()),
-	spec.explFactoryWidth = atof(data[9].c_str()),
-	spec.explFactoryHeight = atof(data[10].c_str()),
-
-	
-	spec.startingLocation = Vector2D(atof(data[11].c_str()),atof(data[12].c_str()));
-
-	return spec;
-}

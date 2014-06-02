@@ -13,8 +13,6 @@ class SpecFactory
 		GameObjectSpec CreateSpreadProjectileSpec();
 		GameObjectSpec CreateLazerProjectileSpec();
 		GameObjectSpec CreateLazer2ProjectileSpec();
-		GameObjectSpec CreateSpecFromVect(const std::vector<std::string>& data);
-		BasicEnemySpec CreateEnemySpecFromVect(const std::vector<std::string>& data);
 		
 };
 

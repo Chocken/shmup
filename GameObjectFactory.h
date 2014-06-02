@@ -17,9 +17,13 @@
 #include "WeaponType.h"
 #include "GameObjectSpec.h"
 #include "SpecFactory.h"
+#include "EnemySpec.h"
+#include "rapidxml.hpp"
+#include "rapidxml_utils.hpp"
 #include <vector>
 #include <memory>
 #include <string>
+using namespace rapidxml;
 
 class GameObjectFactory
 {
@@ -33,7 +37,8 @@ class GameObjectFactory
 		BasicEnemy* CreateEnemy();		
 	
 		std::shared_ptr<IWeapon> CreatePlayerWeapon(WeaponType weaponType);
-		Enemy* CreateEnemy(std::vector<std::string> rawSpec);		
+		Enemy* CreateEnemy(std::vector<std::string> rawSpec);
+		Enemy* CreateEnemy(EnemySpec);	
 		void Update(float scrollDistance);
 		void Clean();
 
@@ -43,6 +48,7 @@ class GameObjectFactory
 		std::map<std::string,SDL_Surface*> spriteMap;
 		std::map<std::string,Mix_Chunk*> soundMap;
 		std::map<float,std::vector<std::string>> enemyDataMap;
+		std::map<float,EnemySpec> enemyData;
 		std::shared_ptr<IWeapon> CreateWeapon(WeaponType weaponType,boost::ptr_list<Projectile>& projectiles);	
 		void GetEnemySpec(std::string fileName);
 		void GetAssets(std::string fileName);

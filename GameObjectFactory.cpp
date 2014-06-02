@@ -11,8 +11,6 @@
 #include "LazerWeapon.h"
 #include "SpreadWeapon.h"
 #include "SpreadWeapon2.h"
-#include "rapidxml.hpp"
-#include "rapidxml_utils.hpp"
 #include <fstream>
 #include <sstream>
 #include <memory>
@@ -76,57 +74,54 @@ Explosion* GameObjectFactory::CreateExplosion(Vector2D centerLocation)
 	return explosion;
 }
 
-
-Enemy* GameObjectFactory::CreateEnemy(std::vector<std::string> rawSpec)
-{
-
-	BasicEnemySpec spec = specFactory.CreateEnemySpecFromVect(rawSpec);
-
+Enemy* GameObjectFactory::CreateEnemy(EnemySpec spec)
+{	
 	BasicEnemy* enemy = new BasicEnemy();
-	enemy->sprite = spriteMap[rawSpec[0]];
-	enemy->explosionSound = soundMap[rawSpec[1]];
-	enemy->width = spec.gameObjectSpec.width;
-	enemy->height = spec.gameObjectSpec.height;
-	enemy->collisionWidth = spec.gameObjectSpec.collisionWidth;
-	enemy->collisionHeight = spec.gameObjectSpec.collisionHeight;
-	enemy->CollisionOffset = spec.gameObjectSpec.collisionOffset;
-	enemy->SetIsActive(true);
-	enemy->collisionType = spec.gameObjectSpec.collisionType;
-	enemy->explosionSprite = spriteMap[rawSpec[15]];
+
+	enemy->sprite = spriteMap[spec.sprite];
+	enemy->explosionSound = soundMap[spec.explosionSound];
+	enemy->explosionSprite = spriteMap[spec.explosionSprite];
+
+	if (spec.collisionType == "CIRC") {enemy->collisionType = CIRC;}
+	else if (spec.collisionType == "RECT"){enemy->collisionType = RECT;}
+
+	enemy->width = spec.width;
+	enemy->height = spec.height;
+	enemy->collisionWidth = spec.collisionWidth;
+	enemy->collisionHeight = spec.collisionHeight;
+	enemy->CollisionOffset = Vector2D(spec.collisionOffset.x,spec.collisionOffset.y);
 	enemy->explosionFactory.Init(spec.explFactoryFrames,spec.explFactoryWidth, spec.explFactoryHeight);
-	enemy->SetLocation(spec.startingLocation);
-	enemy->life = atof(rawSpec[14].c_str());
+	enemy->SetLocation(Vector2D(spec.startingLocation.x,spec.startingLocation.y));
+	enemy->life = spec.life;
+
+	std::vector<std::string>::iterator weaponIter = spec.weapons.begin();
+	while (weaponIter != spec.weapons.end())
+	{
+		if(*weaponIter == "STRAIGHT")
+		{
+			enemy->weapons.push_back(CreateWeapon(STRAIGHT,GameObjects::Instance()->enemyProjectiles));
+		}
+		else if(*weaponIter == "SPREAD")
+		{
+			enemy->weapons.push_back(CreateWeapon(SPREAD,GameObjects::Instance()->enemyProjectiles));
+		} 
+		++weaponIter;
+	}	
 	
-	if(rawSpec[16] == "spline")
+	if(spec.behaviour == "boss1")
 	{
-		enemy->behaviour = new SplineBehaviour(
-			enemy, 
-			Vector2D(atof(rawSpec[17].c_str()),atof(rawSpec[18].c_str())),
-			Vector2D(atof(rawSpec[19].c_str()),atof(rawSpec[20].c_str())),
-			Vector2D(atof(rawSpec[21].c_str()),atof(rawSpec[22].c_str())),
-			Vector2D(atof(rawSpec[23].c_str()),atof(rawSpec[24].c_str())),
-			atof(rawSpec[25].c_str())
-		);
+		enemy->behaviour = new BossBehaviourOne(enemy);		
 	}
-	else if(rawSpec[16] == "sine")
+	else if(spec.behaviour == "sine")
+	{		
+		enemy->behaviour = new SineBehaviour(enemy,spec.amplitude,spec.frequency,spec.speed);		
+	}
+	else if(spec.behaviour == "spline")
 	{
-			enemy->behaviour = new SineBehaviour(
-				enemy,
-				atof(rawSpec[17].c_str()),
-				atof(rawSpec[18].c_str()),
-				atof(rawSpec[19].c_str())
-			);
+		enemy->behaviour = new SplineBehaviour(enemy,spec.p0,spec.p1,spec.p2,spec.p3, spec.speed);
 	}
-	else if(rawSpec[16] == "straight")
-	{
-			enemy->behaviour = new VerticalLineBehaviour(atof(rawSpec[17].c_str()),enemy);
-	}
-	else if (rawSpec[16] == "boss1")
-	{
-		enemy->behaviour = new BossBehaviourOne(enemy);
-		enemy->weapons.push_back(CreateWeapon(STRAIGHT,GameObjects::Instance()->enemyProjectiles));
-		enemy->weapons.push_back(CreateWeapon(SPREAD,GameObjects::Instance()->enemyProjectiles));		
-	}
+	
+	enemy->SetIsActive(true);		
 	return enemy;
 }
 
@@ -181,37 +176,89 @@ StraightProjectile* GameObjectFactory::CreateStraightProjectile(Vector2D locatio
 
 void GameObjectFactory::Update(float scrollDistance)
 {
-	std::map<float,std::vector<std::string>>::iterator iter=enemyDataMap.begin();
-	while (iter != enemyDataMap.end())
-	{			
-			if (scrollDistance > iter->first)
-			{				
-				GameObjects::Instance()->enemies.push_back(CreateEnemy(iter->second));
-				enemyDataMap.erase(iter->first);				
-			}
-			++iter;		
+
+	std::map<float,EnemySpec>::iterator enemyIter=enemyData.begin();
+	while(enemyIter != enemyData.end())
+	{		
+		if (scrollDistance > enemyIter->first)
+		{		
+			Enemy* enemy = CreateEnemy(enemyIter->second);
+			GameObjects::Instance()->enemies.push_back(enemy);					
+			enemyData.erase(enemyIter++);
+			printf("enemy added\n");						
+		}
+		else
+		{
+			++enemyIter;
+		}		
 	}
+
 }
 
 
 void GameObjectFactory::GetEnemySpec(std::string fileName)
-{
+{		
 	std::ifstream myfile(fileName);
-	std::string line;
-	std::vector<std::string> rawSpec;
-	std::string time;
-  if (myfile.is_open())
-  {
-  	while ( getline (myfile,line) )
-  	{
-			int start = line.find(' ');
-			time = line.substr(0,start+1);
-			std::string data = line.substr(start+1);
-	 		rawSpec = split(data,' ');
-			enemyDataMap[atof(time.c_str())] = rawSpec;				
-   	}
-   	myfile.close();
-  }
+	file<> file(const_cast<char *>(fileName.c_str()));
+	xml_document<> doc;
+	doc.parse<0>(file.data());
+	xml_node<> *pRoot = doc.first_node();
+	for(xml_node<> *pSubNode=pRoot->first_node("enemy"); pSubNode; pSubNode=pSubNode->next_sibling())	
+	{
+		xml_attribute<> *timeAttr = pSubNode->first_attribute("time");
+
+		EnemySpec spec;		
+		spec.sprite = pSubNode->first_attribute("sprite")->value();
+		spec.explosionSound = pSubNode->first_attribute("explosionSound")->value();
+		spec.explosionSprite = pSubNode->first_attribute("explosionSprite")->value();
+		spec.collisionType = pSubNode->first_attribute("collisionType")->value();
+		spec.width = atoi(pSubNode->first_node("width")->value());
+		spec.height = atoi(pSubNode->first_node("width")->value());
+		spec.collisionWidth = atoi(pSubNode->first_node("collisionWidth")->value());
+		spec.collisionHeight = atoi(pSubNode->first_node("collisionHeight")->value());
+		spec.collisionOffset.x = atoi(pSubNode->first_node("collisionOffsetX")->value());
+		spec.collisionOffset.y = atoi(pSubNode->first_node("collisionOffsetY")->value());
+		spec.startingLocation.x = atoi(pSubNode->first_node("startingLocationX")->value());
+		spec.startingLocation.y = atoi(pSubNode->first_node("startingLocationY")->value());
+		spec.explFactoryWidth = atoi(pSubNode->first_node("explFactoryWidth")->value());
+		spec.explFactoryHeight = atoi(pSubNode->first_node("explFactoryHeight")->value());
+		spec.explFactoryFrames = atoi(pSubNode->first_node("explFactoryFrames")->value());
+		spec.life = atoi(pSubNode->first_node("life")->value());
+
+		xml_node<>* behaviour = pSubNode->first_node("behaviour");
+		spec.behaviour = behaviour->first_attribute("name")->value();
+		
+		xml_node<>* weapons = pSubNode->first_node("weapons");
+		
+		for(xml_node<>* weapon=weapons->first_node("weapon"); weapon; weapon=weapon->next_sibling())	
+		{
+			spec.weapons.push_back(weapon->value());
+		}
+
+		if(spec.behaviour == "sine")
+		{
+			spec.amplitude = atoi(behaviour->first_node("amplitude")->value());
+			spec.frequency = atoi(behaviour->first_node("frequency")->value());
+			spec.speed = atoi(behaviour->first_node("speed")->value());			
+		}
+
+		else if(spec.behaviour == "spline")
+		{
+			
+			spec.p0.x = atof(behaviour->first_node("p0")->first_attribute("x")->value());
+			spec.p0.y = atof(behaviour->first_node("p0")->first_attribute("y")->value());
+			spec.p1.x = atof(behaviour->first_node("p1")->first_attribute("x")->value());
+			spec.p1.y = atof(behaviour->first_node("p1")->first_attribute("y")->value());
+			spec.p2.x = atof(behaviour->first_node("p2")->first_attribute("x")->value());
+			spec.p2.y = atof(behaviour->first_node("p2")->first_attribute("y")->value());
+			spec.p3.x = atof(behaviour->first_node("p3")->first_attribute("x")->value());
+			spec.p3.y = atof(behaviour->first_node("p3")->first_attribute("y")->value());
+			spec.speed = atof(behaviour->first_node("speed")->value());		
+		}		
+		
+		enemyData[atof(timeAttr->value())] = spec;
+	}
+	
 }
 
 void GameObjectFactory::GetAssets(std::string fileName)
@@ -233,23 +280,3 @@ void GameObjectFactory::GetAssets(std::string fileName)
 		spriteMap[nameAttr->value()] = surface;
 	}
 }
-
-std::vector<std::string> GameObjectFactory::split(std::string input, char delim)
-{	
-	std::vector<std::string> output1;	
-	if(input.find_first_of(delim) == -1)
-	{
-		output1.push_back(input);		
-		return output1;
-	}
-	output1.push_back(input.substr(0,input.find_first_of(delim)));
-	std::vector<std::string> output2 = split(input.substr(input.find_first_of(delim)+1),delim);
-	
-	std::vector<std::string> output;
-	output.reserve( output1.size() + output2.size() );
-	output.insert( output.end(), output1.begin(), output1.end() );
-	output.insert( output.end(), output2.begin(), output2.end() );
-	
-	return output;
-}
-

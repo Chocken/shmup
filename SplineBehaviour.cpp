@@ -18,7 +18,7 @@ SplineBehaviour::SplineBehaviour(BasicEnemy* basicEnemy)
 	p1 = Vector2D(200,200);
 	p2 = Vector2D(400,200);
 	p3 = Vector2D(600,100);
-	speed = 50;
+	speed = 2;
 	enemy = basicEnemy;
 }
 
