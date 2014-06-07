@@ -11,12 +11,11 @@
 #include "LazerWeapon.h"
 #include "SpreadWeapon.h"
 #include "SpreadWeapon2.h"
+#include "PlayState.h"
 #include <fstream>
 #include <sstream>
 #include <memory>
 using namespace rapidxml;
-
-
 
 void GameObjectFactory::Init(std::string assetsfile, std::string enemyDataFile)
 {	
@@ -93,6 +92,7 @@ Enemy* GameObjectFactory::CreateEnemy(EnemySpec spec)
 	enemy->explosionFactory.Init(spec.explFactoryFrames,spec.explFactoryWidth, spec.explFactoryHeight);
 	enemy->SetLocation(Vector2D(spec.startingLocation.x,spec.startingLocation.y));
 	enemy->life = spec.life;
+	enemy->boss = spec.boss;
 
 	std::vector<std::string>::iterator weaponIter = spec.weapons.begin();
 	while (weaponIter != spec.weapons.end())
@@ -184,14 +184,15 @@ void GameObjectFactory::Update(float scrollDistance)
 		{		
 			Enemy* enemy = CreateEnemy(enemyIter->second);
 			GameObjects::Instance()->enemies.push_back(enemy);					
-			enemyData.erase(enemyIter++);
-			printf("enemy added\n");						
+			enemyData.erase(enemyIter++);				
 		}
 		else
 		{
 			++enemyIter;
 		}		
 	}
+
+	
 
 }
 
@@ -212,6 +213,7 @@ void GameObjectFactory::GetEnemySpec(std::string fileName)
 		spec.explosionSound = pSubNode->first_attribute("explosionSound")->value();
 		spec.explosionSprite = pSubNode->first_attribute("explosionSprite")->value();
 		spec.collisionType = pSubNode->first_attribute("collisionType")->value();
+		spec.boss = atoi(pSubNode->first_attribute("boss")->value());
 		spec.width = atoi(pSubNode->first_node("width")->value());
 		spec.height = atoi(pSubNode->first_node("width")->value());
 		spec.collisionWidth = atoi(pSubNode->first_node("collisionWidth")->value());
@@ -224,6 +226,7 @@ void GameObjectFactory::GetEnemySpec(std::string fileName)
 		spec.explFactoryHeight = atoi(pSubNode->first_node("explFactoryHeight")->value());
 		spec.explFactoryFrames = atoi(pSubNode->first_node("explFactoryFrames")->value());
 		spec.life = atoi(pSubNode->first_node("life")->value());
+		
 
 		xml_node<>* behaviour = pSubNode->first_node("behaviour");
 		spec.behaviour = behaviour->first_attribute("name")->value();

@@ -18,13 +18,12 @@ GameObjects GameObjects::m_GameObjects;
 
 void Level::Init(int levelno)
 {		
-	levelFinished = false;	
-	objFactory.Init("assets"+boost::lexical_cast<std::string>(levelno)+".xml","enemies"+boost::lexical_cast<std::string>(1)+".xml");
-	printf("objectfactory initialized\n");
+	
+	objFactory.Init("assets"+boost::lexical_cast<std::string>(levelno)+".xml","enemies"+boost::lexical_cast<std::string>(2)+".xml");	
 	background = objFactory.CreateBackground();
 	PlayerShip playerShip = objFactory.CreatePlayerShip();
 	GameObjects::Instance()->playerShip = playerShip;
-	GameObjects::Instance()->playerShip.weapon = objFactory.CreatePlayerWeapon(SPREAD);
+	GameObjects::Instance()->playerShip.weapon = objFactory.CreatePlayerWeapon(SPREAD2);
 	SDL_Color textColor = { 255, 255, 255 };
 	score = TextRenderer(const_cast<char *>("manaspc.ttf"),28, textColor);
 	timer.start();
@@ -58,11 +57,7 @@ void Level::HandleEvents(SDL_Event event, Game* game)
 			{
 				case SDLK_SPACE:			
 					game->PushState(PauseState::Instance());					
-					break;
-					
-				case SDLK_RETURN:
-					levelFinished = true;															
-					break;							
+					break;				
 			}
 			break;
 		case SDL_JOYBUTTONDOWN: 

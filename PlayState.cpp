@@ -5,15 +5,21 @@
 #include "Level.h"
 #include "LevelFactory.h"
 #include "MenuState.h"
+#include <iostream>
 
 PlayState PlayState::m_PlayState;
 TextRenderer PlayState::textRenderer;
 
+PlayState::PlayState() : levelFinished(false), bossDestroyed(false)
+{
+}
+
 void PlayState::Init()
 {
+	levelFinished = false;
 	printf("playstate init\n");
-	//level = Level();		
-	level.Init(1);
+	std::cout<<levelFinished<<std::endl;	
+	level.Init(2);
 	blackScreen = BlackScreen(1000);
 	blackScreen.sprite = Sprite::Load(const_cast<char *>("blackScreen.png"), false);
 	SDL_Color textColor = { 255, 255, 255 };
@@ -47,6 +53,13 @@ void PlayState::HandleEvents(Game* game)
 			case SDL_QUIT:										
 				game->Quit();				
 				break;
+			case SDL_KEYDOWN:
+			switch(event.key.keysym.sym)
+			{
+				case SDLK_RETURN:
+					levelFinished = true;															
+					break;
+			}
 		}
 	}
 	
@@ -55,15 +68,27 @@ void PlayState::HandleEvents(Game* game)
 void PlayState::Update(Game* game) 
 {	
 	level.Update();	
-	if(level.levelFinished == true)
-	{				
-		blackScreen.Update(timer.get_ticks());
+
+	if(bossDestroyed == true)
+	{
+		endTimer.start();
+		bossDestroyed = false;		
+	}
+
+	if(endTimer.get_ticks() > 5000) 
+	{		
+		levelFinished = true;
+		endTimer.reset();	
+	}
+	if(levelFinished == true)
+	{		
+		blackScreen.Update(fadeTimer.get_ticks());
 		if(blackScreen.FullAlpha())
-		{			
+		{						
 			game->ChangeState(MenuState::Instance());
 		}		
 	}
-	timer.start();
+	fadeTimer.start();
 }
 
 void PlayState::Draw(Game* game) 

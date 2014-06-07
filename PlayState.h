@@ -30,15 +30,20 @@ class PlayState : public GameState
 		{
 			return &m_PlayState;
 		}
+
+		
+		bool bossDestroyed;
 		
 	protected:
 		
-		PlayState() {}
+		PlayState();
 		
 	private:
+		bool levelFinished;
 		static PlayState m_PlayState;
 		Level level; 
-		Timer timer;
+		Timer fadeTimer;
+		Timer endTimer;
 		BlackScreen blackScreen;		
 		
 };

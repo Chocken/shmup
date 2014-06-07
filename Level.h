@@ -29,7 +29,6 @@ class Level
 		void Update();
 		void Draw(Game* game);
 		void Pause();
-		bool levelFinished;
 
 	private:
 		void Draw(boost::ptr_list<Explosion>& Objects, SDL_Surface* screen);

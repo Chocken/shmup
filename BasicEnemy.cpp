@@ -1,6 +1,7 @@
 #include "BasicEnemy.h"
 #include "GameObjects.h"
 #include "Settings.h"
+#include "PlayState.h"
 #include <iostream>
 #include <stdlib.h>
 
@@ -12,6 +13,7 @@ BasicEnemy::BasicEnemy()
 	isRed = false;
 	dying = false;
 	explosionCount = 0;
+	boss = false;
 }
 BasicEnemy::~BasicEnemy()
 {
@@ -86,7 +88,12 @@ void BasicEnemy::OnProjectileHit()
 			{
 				printf("sound not played\n");
 			}
-		isActive = false;	
+		isActive = false;
+
+		if(boss)
+		{
+			PlayState::Instance()->bossDestroyed = true;
+		}	
 	}
 }
 

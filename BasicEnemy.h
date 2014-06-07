@@ -34,6 +34,7 @@ class BasicEnemy: public Enemy
 		Behaviour* behaviour;	
 		vector<shared_ptr<IWeapon>> weapons;		
 		ExplosionFactory explosionFactory;
+		bool boss;
 
 	protected:						
 		bool fired;
