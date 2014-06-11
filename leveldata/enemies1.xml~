@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<enemies>
+	<enemy time="200" sprite="enemy1" explosionSound="smallExplosion" explosionSprite="smallexplosion" collisionType="CIRC">
+		<width>45</width>
+		<height>35</height>
+		<collisionWidth>30</collisionWidth>
+		<collisionHeight>30</collisionHeight>
+		<collisionOffsetX>0</collisionOffsetX>
+		<collisionOffsetY>0</collisionOffsetY>
+		<explFactoryFrames>10</explFactoryFrames>
+		<explFactoryWidth>30</explFactoryWidth>
+		<explFactoryHeight>30</explFactoryHeight>
+		<startingLocationX>200</startingLocationX>
+		<startingLocationY>-200</startingLocationY>
+		<life>200</life>
+		<weapons/>
+		<behaviour name="sine">
+			<amplitude>5</amplitude>
+			<frequency>1.5</frequency>
+			<speed>200</speed>
+		</behaviour>
+	</enemy>
+	<enemy time="275" sprite="enemy1" explosionSound="smallExplosion" explosionSprite="smallexplosion" collisionType="CIRC">
+		<width>45</width>
+		<height>35</height>
+		<collisionWidth>30</collisionWidth>
+		<collisionHeight>30</collisionHeight>
+		<collisionOffsetX>0</collisionOffsetX>
+		<collisionOffsetY>0</collisionOffsetY>
+		<explFactoryFrames>10</explFactoryFrames>
+		<explFactoryWidth>30</explFactoryWidth>
+		<explFactoryHeight>30</explFactoryHeight>
+		<startingLocationX>200</startingLocationX>
+		<startingLocationY>-200</startingLocationY>
+		<life>200</life>
+		<weapons/>
+		<behaviour name="sine">
+			<amplitude>5</amplitude>
+			<frequency>1.5</frequency>
+			<speed>200</speed>
+		</behaviour>
+	</enemy>
+	<enemy time="350" sprite="enemy1" explosionSound="smallExplosion" explosionSprite="smallexplosion" collisionType="CIRC">
+		<width>45</width>
+		<height>35</height>
+		<collisionWidth>30</collisionWidth>
+		<collisionHeight>30</collisionHeight>
+		<collisionOffsetX>0</collisionOffsetX>
+		<collisionOffsetY>0</collisionOffsetY>
+		<explFactoryFrames>10</explFactoryFrames>
+		<explFactoryWidth>30</explFactoryWidth>
+		<explFactoryHeight>30</explFactoryHeight>
+		<startingLocationX>200</startingLocationX>
+		<startingLocationY>-200</startingLocationY>
+		<life>200</life>
+		<weapons/>
+		<behaviour name="sine">
+			<amplitude>5</amplitude>
+			<frequency>1.5</frequency>
+			<speed>200</speed>
+		</behaviour>
+	</enemy>	
+	<enemy time="500" sprite="enemy1" explosionSound="smallExplosion" explosionSprite="smallexplosion" collisionType="CIRC">
+		<width>45</width>
+		<height>35</height>
+		<collisionWidth>30</collisionWidth>
+		<collisionHeight>30</collisionHeight>
+		<collisionOffsetX>0</collisionOffsetX>
+		<collisionOffsetY>0</collisionOffsetY>
+		<explFactoryFrames>10</explFactoryFrames>
+		<explFactoryWidth>30</explFactoryWidth>
+		<explFactoryHeight>30</explFactoryHeight>
+		<startingLocationX>200</startingLocationX>
+		<startingLocationY>-200</startingLocationY>
+		<life>200</life>
+		<weapons/>
+		<behaviour name="spline">
+			<p0 x="100" y="100"/>
+			<p1 x="200" y="200"/>
+			<p2 x="400" y="200"/>
+			<p3 x="600" y="100"/>
+			<speed>2</speed>
+		</behaviour>
+	</enemy>
+</enemies>

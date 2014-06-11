@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<enemies>
+	<enemy time="200" sprite="boss1" explosionSound="smallExplosion" explosionSprite="smallexplosion" collisionType="RECT">
+		<width>243</width>
+		<height>140</height>
+		<collisionWidth>200</collisionWidth>
+		<collisionHeight>60</collisionHeight>
+		<collisionOffsetX>25</collisionOffsetX>
+		<collisionOffsetY>35</collisionOffsetY>
+		<explFactoryFrames>10</explFactoryFrames>
+		<explFactoryWidth>30</explFactoryWidth>
+		<explFactoryHeight>30</explFactoryHeight>
+		<startingLocationX>300</startingLocationX>
+		<startingLocationY>-200</startingLocationY>
+		<life>10000</life>
+		<weapons>
+			<weapon>STRAIGHT</weapon>
+			<weapon>SPREAD</weapon>
+		</weapons>
+		<behaviour name="boss1"/>
+	</enemy>
+</enemies>
