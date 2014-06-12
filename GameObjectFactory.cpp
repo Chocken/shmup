@@ -58,7 +58,6 @@ PlayerShip GameObjectFactory::CreatePlayerShip()
 	playerShip.sprite = spriteMap["playerShip"];
 	playerShip.Init();
 	playerShip.SetIsActive(true);
-	playerShip.projectileSprite = spriteMap["projectile1"];
 	playerShip.explosionSprite = spriteMap["explosions"];
 	playerShip.explosionFactory.Init(9,90,90);	
 	return playerShip;
@@ -93,6 +92,7 @@ Enemy* GameObjectFactory::CreateEnemy(EnemySpec spec)
 	enemy->SetLocation(Vector2D(spec.startingLocation.x,spec.startingLocation.y));
 	enemy->life = spec.life;
 	enemy->boss = spec.boss;
+	enemy->scoreValue = spec.scoreValue;
 
 	std::vector<std::string>::iterator weaponIter = spec.weapons.begin();
 	while (weaponIter != spec.weapons.end())
@@ -213,9 +213,10 @@ void GameObjectFactory::GetEnemySpec(std::string fileName)
 		spec.explosionSound = pSubNode->first_attribute("explosionSound")->value();
 		spec.explosionSprite = pSubNode->first_attribute("explosionSprite")->value();
 		spec.collisionType = pSubNode->first_attribute("collisionType")->value();
+		spec.scoreValue = atoi(pSubNode->first_attribute("scoreValue")->value());
 		spec.boss = atoi(pSubNode->first_attribute("boss")->value());
 		spec.width = atoi(pSubNode->first_node("width")->value());
-		spec.height = atoi(pSubNode->first_node("width")->value());
+		spec.height = atoi(pSubNode->first_node("width")->value());		
 		spec.collisionWidth = atoi(pSubNode->first_node("collisionWidth")->value());
 		spec.collisionHeight = atoi(pSubNode->first_node("collisionHeight")->value());
 		spec.collisionOffset.x = atoi(pSubNode->first_node("collisionOffsetX")->value());

@@ -3,6 +3,7 @@
 
 #include "SDL/SDL.h"
 #include "SDL/SDL_ttf.h"
+#include <string>
 
 class TextRenderer
 {
@@ -12,8 +13,10 @@ class TextRenderer
 		void SetFont(char fontName[], int fontSize);
 		void SetColour(SDL_Color textColor);
 		void SetSize(int size);
+		void SetText(std::string text);
+		void Free();
 		void Clear();
-		void Draw(SDL_Surface* gameSurface, char text[], int x, int y);
+		void Draw(SDL_Surface* gameSurface, int x, int y);
 	 
 	private:
 		void Init();

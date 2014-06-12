@@ -3,6 +3,7 @@
 #include "MenuState.h"
 #include "PlayState.h"
 #include "IntroState.h"
+#include "GameObjects.h"
 #include <string>
 
 MenuState MenuState::m_MenuState;
@@ -15,6 +16,8 @@ void MenuState::Init()
 	SDL_Color textColor = { 255, 255, 255 };
 	textRenderer = TextRenderer(const_cast<char *>("manaspc.ttf"),28, textColor);
 	timer.start();
+	GameObjects::Instance()->PlayerLives = 2;
+	GameObjects::Instance()->PlayerScore = 0;
 }
 
 void MenuState::Clean()
@@ -68,9 +71,11 @@ void MenuState::Draw(Game* game)
 {	
 	Sprite::Draw(game->GetScreen(), menuSprite, 0, 0);
 
-	textRenderer.Draw(game->GetScreen(),const_cast<char *>("CHANTICLEER HEGEMONY 2"), 75, 300);
+	textRenderer.SetText("CHANTICLEER HEGEMONY 2");
+	textRenderer.Draw(game->GetScreen(),75, 300);
 
-	textRenderer.Draw(game->GetScreen(),const_cast<char *>("Press space game to initation"), 30, 400);
+	textRenderer.SetText("Press space game to initation");
+	textRenderer.Draw(game->GetScreen(),30, 400);
 	
 	SDL_Flip(game->GetScreen());
 }

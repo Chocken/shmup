@@ -12,6 +12,7 @@ class Enemy : public GamePlayObject
 		virtual ~Enemy() = 0;				
 		virtual void TakeDamage(int damage) = 0;
 		virtual void OnProjectileHit() = 0;
+		int scoreValue;
 		
 };
 #endif

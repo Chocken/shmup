@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <enemies>
-	<enemy time="200" sprite="enemy1" explosionSound="smallExplosion" explosionSprite="smallexplosion" collisionType="CIRC">
+	<enemy time="200" sprite="enemy1" explosionSound="smallExplosion" explosionSprite="smallexplosion" collisionType="CIRC" boss="0" scoreValue = "100">
 		<width>45</width>
 		<height>35</height>
 		<collisionWidth>30</collisionWidth>
@@ -20,7 +20,7 @@
 			<speed>200</speed>
 		</behaviour>
 	</enemy>
-	<enemy time="275" sprite="enemy1" explosionSound="smallExplosion" explosionSprite="smallexplosion" collisionType="CIRC">
+	<enemy time="275" sprite="enemy1" explosionSound="smallExplosion" explosionSprite="smallexplosion" collisionType="CIRC" boss="0" scoreValue = "100">
 		<width>45</width>
 		<height>35</height>
 		<collisionWidth>30</collisionWidth>
@@ -40,7 +40,7 @@
 			<speed>200</speed>
 		</behaviour>
 	</enemy>
-	<enemy time="350" sprite="enemy1" explosionSound="smallExplosion" explosionSprite="smallexplosion" collisionType="CIRC">
+	<enemy time="350" sprite="enemy1" explosionSound="smallExplosion" explosionSprite="smallexplosion" collisionType="CIRC" boss="0" scoreValue = "100">
 		<width>45</width>
 		<height>35</height>
 		<collisionWidth>30</collisionWidth>
@@ -60,7 +60,7 @@
 			<speed>200</speed>
 		</behaviour>
 	</enemy>	
-	<enemy time="500" sprite="enemy1" explosionSound="smallExplosion" explosionSprite="smallexplosion" collisionType="CIRC">
+	<enemy time="500" sprite="enemy1" explosionSound="smallExplosion" explosionSprite="smallexplosion" collisionType="CIRC" boss="0" scoreValue = "100">
 		<width>45</width>
 		<height>35</height>
 		<collisionWidth>30</collisionWidth>
@@ -75,10 +75,10 @@
 		<life>200</life>
 		<weapons/>
 		<behaviour name="spline">
-			<p0 x="100" y="100"/>
-			<p1 x="200" y="200"/>
-			<p2 x="400" y="200"/>
-			<p3 x="600" y="100"/>
+			<p0 x="100" y="-200"/>
+			<p1 x="200" y="-100"/>
+			<p2 x="400" y="900"/>
+			<p3 x="600" y="1000"/>
 			<speed>2</speed>
 		</behaviour>
 	</enemy>

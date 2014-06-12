@@ -19,7 +19,10 @@ class GameObjects
 		boost::ptr_list<Enemy> enemies;
 		boost::ptr_list<Explosion> explosions;	
 
-		PlayerShip playerShip;		
+		PlayerShip playerShip;
+
+		int PlayerLives;
+		long PlayerScore;
 		
 	private:
 		static GameObjects m_GameObjects;

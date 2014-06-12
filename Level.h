@@ -43,13 +43,17 @@ class Level
 		void HandleCollisions(boost::ptr_list<Projectile>& gameObjects, PlayerShip& playerShip);
 		void HandleCollisions(boost::ptr_list<Projectile>& projectiles,boost::ptr_list<Enemy>& enemies);
 
+		TextRenderer lives;
 		TextRenderer score;
 		ExplosionFactory explosionFactory;
 		void UpdateProjectiles();		
 		GameObjectFactory objFactory;							
 		Timer timer;
 		Timer explosionTimer;
-		Background background;		
+		Background background;
+
+		int storedLives;
+		long storedScore;
 				
 		CollisionDetector collisionDetector;
 };

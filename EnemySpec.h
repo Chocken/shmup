@@ -18,6 +18,7 @@ class EnemySpec
 		Vector2D startingLocation;
 		int explFactoryWidth, explFactoryHeight, explFactoryFrames;		
 		int life;
+		int scoreValue;
 		vector<string> weapons;
 		string behaviour;
 		Vector2D p0,p1,p2,p3;		

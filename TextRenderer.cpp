@@ -24,16 +24,24 @@ void TextRenderer::SetColour(SDL_Color textColor)
 	textColor = color;
 }
 
+void TextRenderer::SetText(std::string text)
+{
+	surface = TTF_RenderText_Solid(font, const_cast<char *>(text.c_str()), color );
+}
+
 void TextRenderer::Init()
 {
 	font = TTF_OpenFont(name, size);
 	if(font == NULL){printf("failed to load font\n");}
 }
 
-void TextRenderer::Draw(SDL_Surface* gameSurface, char text[], int x, int y)
+void TextRenderer::Free()
 {
-	surface = TTF_RenderText_Solid(font, text, color );
-	Sprite::Draw(gameSurface, surface, x, y);
 	SDL_FreeSurface(surface);
+}
+
+void TextRenderer::Draw(SDL_Surface* gameSurface, int x, int y)
+{	
+	Sprite::Draw(gameSurface, surface, x, y);	
 }
 

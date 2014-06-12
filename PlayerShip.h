@@ -21,14 +21,13 @@ class PlayerShip: public GamePlayObject
 		void HandleEvents(SDL_Event event);
 		void Init();		
 		void GetHit();
-		StraightProjectile* projectile;		
-		SDL_Surface* projectileSprite;
+		StraightProjectile* projectile;				
 		std::shared_ptr<IWeapon> weapon;
 		SDL_Surface* explosionSprite;
 		bool isRecentlyHit();
 		void OnPause();
-		ExplosionFactory explosionFactory;  		
-				
+		ExplosionFactory explosionFactory;
+		
 	private:
 		int frame;
 		int velocity;

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <enemies>
-	<enemy time="200" sprite="boss1" explosionSound="smallExplosion" explosionSprite="smallexplosion" collisionType="RECT" boss="1">
+	<enemy time="200" sprite="boss1" explosionSound="smallExplosion" explosionSprite="smallexplosion" collisionType="RECT" boss="1" scoreValue = "100">
 		<width>243</width>
 		<height>140</height>
 		<collisionWidth>200</collisionWidth>

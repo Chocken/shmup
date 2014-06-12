@@ -19,7 +19,7 @@ void PlayState::Init()
 	levelFinished = false;
 	printf("playstate init\n");
 	std::cout<<levelFinished<<std::endl;	
-	level.Init(2);
+	level.Init(1);
 	blackScreen = BlackScreen(1000);
 	blackScreen.sprite = Sprite::Load(const_cast<char *>("blackScreen.png"), false);
 	SDL_Color textColor = { 255, 255, 255 };

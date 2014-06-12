@@ -18,21 +18,27 @@ GameObjects GameObjects::m_GameObjects;
 
 void Level::Init(int levelno)
 {		
-	
-	objFactory.Init("assets"+boost::lexical_cast<std::string>(levelno)+".xml","enemies"+boost::lexical_cast<std::string>(2)+".xml");	
+	objFactory.Init("assets"+boost::lexical_cast<std::string>(levelno)+".xml","enemies"+boost::lexical_cast<std::string>(levelno)+".xml");
 	background = objFactory.CreateBackground();
 	PlayerShip playerShip = objFactory.CreatePlayerShip();
 	GameObjects::Instance()->playerShip = playerShip;
 	GameObjects::Instance()->playerShip.weapon = objFactory.CreatePlayerWeapon(SPREAD2);
 	SDL_Color textColor = { 255, 255, 255 };
-	score = TextRenderer(const_cast<char *>("manaspc.ttf"),28, textColor);
+	lives = TextRenderer(const_cast<char *>("manaspc.ttf"),15, textColor);
+	score = TextRenderer(const_cast<char *>("manaspc.ttf"),15, textColor);
+	storedLives = GameObjects::Instance()->PlayerLives;
+	storedScore = GameObjects::Instance()->PlayerScore;
+	lives.SetText("REST: " + std::to_string(GameObjects::Instance()->PlayerLives));
+	score.SetText("SCORE: " + std::to_string(GameObjects::Instance()->PlayerScore));
+	std::cout << "score: " <<GameObjects::Instance()->PlayerScore <<std::endl;	
 	timer.start();
 	explosionTimer.start();
-
 }
 
 void Level::Clean()
-{		
+{
+	lives.Free();
+	score.Free();		
 	GameObjects::Instance()->enemies.clear();
 	GameObjects::Instance()->projectiles.clear();
 	GameObjects::Instance()->explosions.clear();
@@ -73,22 +79,40 @@ void Level::HandleEvents(SDL_Event event, Game* game)
 }
 
 void Level::Update()
-{
-
-	HandleCollisions(GameObjects::Instance()->enemies, GameObjects::Instance()->playerShip);
-
-	HandleCollisions(GameObjects::Instance()->enemyProjectiles, GameObjects::Instance()->playerShip); 
-	HandleCollisions(GameObjects::Instance()->projectiles,GameObjects::Instance()->enemies);		
+{		
 
 	background.Update(timer.get_ticks());
-	GameObjects::Instance()->playerShip.Update(timer.get_ticks());	
+
+	if(GameObjects::Instance()->playerShip.isActive)
+	{
+		GameObjects::Instance()->playerShip.Update(timer.get_ticks());	
+	}
+
+	if(GameObjects::Instance()->PlayerLives != storedLives)
+	{
+		lives.Free();
+		lives.SetText("REST: " + std::to_string(GameObjects::Instance()->PlayerLives));
+		storedLives = GameObjects::Instance()->PlayerLives;	
+	}
+
+	if(GameObjects::Instance()->PlayerScore != storedScore)
+	{
+		score.Free();
+		score.SetText("SCORE: " + std::to_string(GameObjects::Instance()->PlayerScore));
+		storedScore = GameObjects::Instance()->PlayerScore;	
+	}
+
+	//std::cout << GameObjects::Instance()->enemies.size() << std::endl;
 
 
+	HandleCollisions(GameObjects::Instance()->enemies, GameObjects::Instance()->playerShip);
 	Update(GameObjects::Instance()->enemies, timer.get_ticks());
+	HandleCollisions(GameObjects::Instance()->projectiles,GameObjects::Instance()->enemies);
 	Update(GameObjects::Instance()->projectiles,timer.get_ticks());
+	HandleCollisions(GameObjects::Instance()->enemyProjectiles, GameObjects::Instance()->playerShip); 
 	Update(GameObjects::Instance()->enemyProjectiles,timer.get_ticks());
 	Update(GameObjects::Instance()->explosions, timer.get_ticks());
-	objFactory.Update(background.DistanceScrolled());
+	objFactory.Update(background.DistanceScrolled());	
 		
 	timer.start();	
 }
@@ -101,8 +125,15 @@ void Level::Draw(Game* game)
 	Draw(GameObjects::Instance()->enemies, game->GetScreen());
 	Draw(GameObjects::Instance()->projectiles, game->GetScreen());
 	Draw(GameObjects::Instance()->enemyProjectiles, game->GetScreen());
-	GameObjects::Instance()->playerShip.Draw(game->GetScreen());
-	Draw(GameObjects::Instance()->explosions, game->GetScreen());	
+	
+	if(GameObjects::Instance()->playerShip.isActive)
+	{
+		GameObjects::Instance()->playerShip.Draw(game->GetScreen());
+	}
+	Draw(GameObjects::Instance()->explosions, game->GetScreen());
+
+	lives.Draw(game->GetScreen(), 0, 10);
+	score.Draw(game->GetScreen(), 450, 10);
 }
 
 void Level::Draw(boost::ptr_list<Explosion>& objects, SDL_Surface* screen)
@@ -178,14 +209,14 @@ void Level::Update(boost::ptr_list<Projectile>& projectiles, Uint32 deltaTicks)
 
 void Level::Update(boost::ptr_list<Enemy>& enemies, Uint32 deltaTicks)
 {	
-
 	boost::ptr_list<Enemy>::iterator enemyIter = enemies.begin();
 
 	while (enemyIter != enemies.end())
 	{
 
 		if(enemyIter->GetIsActive() == false)
-		{					
+		{
+			GameObjects::Instance()->PlayerScore += enemyIter->scoreValue;					
 			enemyIter = enemies.erase(enemyIter);
 		}		
 		else

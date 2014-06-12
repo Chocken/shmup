@@ -94,7 +94,9 @@ void IntroState::Draw(Game* game)
 
 	while(iter != _intro.end())
 	{
-		_textRenderer.Draw(game->GetScreen(),const_cast<char *>(iter->c_str()), 20, textY + offset);
+		_textRenderer.SetText(*iter);
+		_textRenderer.Draw(game->GetScreen(), 20, textY + offset);
+		_textRenderer.Free();
 		offset += 30;
 		++iter;
 	}

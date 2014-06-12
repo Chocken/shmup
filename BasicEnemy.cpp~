@@ -33,6 +33,38 @@ void BasicEnemy::Update(Uint32 deltaTicks)
 	else { sheetVector.x = 0; }
 
 	if(flashTimer.get_ticks() > 10) {isRed = false; flashTimer.stop();}	
+
+	if(life <= 0)
+	{
+		isActive = false;
+		if(explosionFactory.width < (width * 2))
+		{
+			int explosionArea = explosionFactory.width * explosionFactory.height;
+			int enemyArea = collisionWidth * collisionHeight;
+			for(int i=0; i<(enemyArea/explosionArea*4); i++)
+			{			
+				int randWidth = (std::rand() % (int)((collisionWidth))) - ((int)(collisionWidth)/2);
+				int randHeight = (std::rand() % (int)((collisionHeight))) - ((int)(collisionHeight)/2);
+				Explosion* explosion = explosionFactory.CreateExplosion(explosionSprite, Center() + Vector2D(randWidth,randHeight));				
+				GameObjects::Instance()->explosions.push_back(explosion);
+			}			
+				
+		}
+		else
+		{
+			Explosion* explosion = explosionFactory.CreateExplosion(explosionSprite, Center());
+			GameObjects::Instance()->explosions.push_back(explosion);			
+		}
+		if(Mix_PlayChannel( -1, explosionSound, 0 )== -1)
+		{
+			printf("sound not played\n");
+		}		
+	
+		if(boss)
+		{
+			PlayState::Instance()->bossDestroyed = true;
+		}
+	}
 }
 
 void BasicEnemy::Draw(SDL_Surface* surface)
@@ -64,37 +96,6 @@ void BasicEnemy::OnProjectileHit()
 {
 	isRed = !isRed;
 	flashTimer.start();
-	if(life <= 0)
-	{
-		if(explosionFactory.width < (width * 2))
-		{
-			int explosionArea = explosionFactory.width * explosionFactory.height;
-			int enemyArea = collisionWidth * collisionHeight;
-			for(int i=0; i<(enemyArea/explosionArea*4); i++)
-			{			
-				int randWidth = (std::rand() % (int)((collisionWidth))) - ((int)(collisionWidth)/2);
-				int randHeight = (std::rand() % (int)((collisionHeight))) - ((int)(collisionHeight)/2);
-				Explosion* explosion = explosionFactory.CreateExplosion(explosionSprite, Center() + Vector2D(randWidth,randHeight));				
-				GameObjects::Instance()->explosions.push_back(explosion);
-			}			
-				
-		}
-		else
-		{
-			Explosion* explosion = explosionFactory.CreateExplosion(explosionSprite, Center());
-			GameObjects::Instance()->explosions.push_back(explosion);			
-		}
-		if(Mix_PlayChannel( -1, explosionSound, 0 )== -1)
-			{
-				printf("sound not played\n");
-			}
-		isActive = false;
-
-		if(boss)
-		{
-			PlayState::Instance()->levelFinished = true;
-		}	
-	}
 }
 
 

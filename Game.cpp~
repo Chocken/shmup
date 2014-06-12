@@ -94,12 +94,12 @@ void Game::HandleEvents()
 
 void Game::Update()
 {
-	timer.start();
-	states.back()->Update(this);	
+	timer.start();	
 	if( timer.get_ticks() < (1000 / FRAMES_PER_SECOND) ) 
 	{
 		SDL_Delay( ( 1000 / FRAMES_PER_SECOND ) - timer.get_ticks());		
-	}		
+	}
+	states.back()->Update(this);	
 }
 
 void Game::Draw()

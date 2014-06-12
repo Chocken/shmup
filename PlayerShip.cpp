@@ -33,6 +33,7 @@ void PlayerShip::Init()
 	drawing = true;
 	recentlyHit = false;
 	firing = false;
+	isActive = true;
 	shotCount = 0;
 }
 
@@ -129,7 +130,12 @@ void PlayerShip::GetHit()
 	hitTimer.start();
 	blinkTimer.start();
 	recentlyHit = true;
-	drawing = false;	
+	drawing = false;
+	GameObjects::Instance()->PlayerLives--;
+	if(GameObjects::Instance()->PlayerLives == 0)
+	{
+		isActive = false;
+	}	
 }
 
 bool PlayerShip::isRecentlyHit()
