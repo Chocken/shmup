@@ -78,7 +78,7 @@ void BasicEnemy::Draw(SDL_Surface* surface)
 
 void BasicEnemy::TakeDamage(int damage)
 {
-	life -= damage;
+	life -= damage;	
 }
 
 void BasicEnemy::SetLocation(Vector2D Location)
@@ -95,8 +95,8 @@ void BasicEnemy::SetLocationByCenter(Vector2D Location)
 
 void BasicEnemy::OnProjectileHit()
 {
-	isRed = !isRed;
-	flashTimer.start();
+	isRed = true;
+	flashTimer.start();	
 }
 
 

@@ -33,6 +33,7 @@ class PlayState : public GameState
 
 		
 		bool bossDestroyed;
+		bool playerDestroyed;
 		
 	protected:
 		

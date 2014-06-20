@@ -37,6 +37,7 @@ void BasicEnemy::Update(Uint32 deltaTicks)
 	if(life <= 0)
 	{
 		isActive = false;
+		GameObjects::Instance()->PlayerScore += scoreValue;	
 		if(explosionFactory.width < (width * 2))
 		{
 			int explosionArea = explosionFactory.width * explosionFactory.height;
@@ -77,7 +78,7 @@ void BasicEnemy::Draw(SDL_Surface* surface)
 
 void BasicEnemy::TakeDamage(int damage)
 {
-	life -= damage;
+	life -= damage;	
 }
 
 void BasicEnemy::SetLocation(Vector2D Location)
@@ -94,8 +95,9 @@ void BasicEnemy::SetLocationByCenter(Vector2D Location)
 
 void BasicEnemy::OnProjectileHit()
 {
-	isRed = !isRed;
+	isRed = true;
 	flashTimer.start();
+	printf("hit\n");
 }
 
 

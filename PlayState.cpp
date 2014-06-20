@@ -5,6 +5,7 @@
 #include "Level.h"
 #include "LevelFactory.h"
 #include "MenuState.h"
+#include "ContinueState.h"
 #include <iostream>
 
 PlayState PlayState::m_PlayState;
@@ -16,10 +17,8 @@ PlayState::PlayState() : levelFinished(false), bossDestroyed(false)
 
 void PlayState::Init()
 {
-	levelFinished = false;
-	printf("playstate init\n");
-	std::cout<<levelFinished<<std::endl;	
-	level.Init(1);
+	levelFinished = false;	
+	level.Init(2);
 	blackScreen = BlackScreen(1000);
 	blackScreen.sprite = Sprite::Load(const_cast<char *>("blackScreen.png"), false);
 	SDL_Color textColor = { 255, 255, 255 };
@@ -75,6 +74,12 @@ void PlayState::Update(Game* game)
 		bossDestroyed = false;		
 	}
 
+	if(playerDestroyed == true)
+	{
+		endTimer.start();
+		playerDestroyed = false;		
+	}
+
 	if(endTimer.get_ticks() > 5000) 
 	{		
 		levelFinished = true;
@@ -85,7 +90,7 @@ void PlayState::Update(Game* game)
 		blackScreen.Update(fadeTimer.get_ticks());
 		if(blackScreen.FullAlpha())
 		{						
-			game->ChangeState(MenuState::Instance());
+			game->ChangeState(ContinueState::Instance());			
 		}		
 	}
 	fadeTimer.start();

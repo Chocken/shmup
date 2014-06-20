@@ -79,7 +79,7 @@
 			<p1 x="200" y="-100"/>
 			<p2 x="400" y="900"/>
 			<p3 x="600" y="1000"/>
-			<speed>2</speed>
+			<speed>0.2</speed>
 		</behaviour>
 	</enemy>
 </enemies>

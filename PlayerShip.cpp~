@@ -134,7 +134,6 @@ void PlayerShip::GetHit()
 	GameObjects::Instance()->PlayerLives--;
 	if(GameObjects::Instance()->PlayerLives == 0)
 	{
-		PlayState::Instance()->playerDestroyed = true;
 		isActive = false;
 	}	
 }

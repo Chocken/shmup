@@ -215,8 +215,7 @@ void Level::Update(boost::ptr_list<Enemy>& enemies, Uint32 deltaTicks)
 	{
 
 		if(enemyIter->GetIsActive() == false)
-		{
-			GameObjects::Instance()->PlayerScore += enemyIter->scoreValue;					
+		{							
 			enemyIter = enemies.erase(enemyIter);
 		}		
 		else

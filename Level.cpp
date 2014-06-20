@@ -102,9 +102,6 @@ void Level::Update()
 		storedScore = GameObjects::Instance()->PlayerScore;	
 	}
 
-	//std::cout << GameObjects::Instance()->enemies.size() << std::endl;
-
-
 	HandleCollisions(GameObjects::Instance()->enemies, GameObjects::Instance()->playerShip);
 	Update(GameObjects::Instance()->enemies, timer.get_ticks());
 	HandleCollisions(GameObjects::Instance()->projectiles,GameObjects::Instance()->enemies);

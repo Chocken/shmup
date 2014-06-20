@@ -96,10 +96,13 @@ void Game::Update()
 {
 	timer.start();
 	states.back()->Update(this);	
-	if( timer.get_ticks() < (1000 / FRAMES_PER_SECOND) ) 
-	{
-		SDL_Delay( ( 1000 / FRAMES_PER_SECOND ) - timer.get_ticks());		
-	}		
+	
+	/*if( timer.get_ticks() < 1000 / FRAMES_PER_SECOND) 
+	{		
+		SDL_Delay( ( 1000 / FRAMES_PER_SECOND ) - timer.get_ticks());								
+	}*/
+	
+
 }
 
 void Game::Draw()

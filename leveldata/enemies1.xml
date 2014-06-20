@@ -15,7 +15,7 @@
 		<life>200</life>
 		<weapons/>
 		<behaviour name="sine">
-			<amplitude>5</amplitude>
+			<amplitude>50</amplitude>
 			<frequency>1.5</frequency>
 			<speed>200</speed>
 		</behaviour>
@@ -35,7 +35,7 @@
 		<life>200</life>
 		<weapons/>
 		<behaviour name="sine">
-			<amplitude>5</amplitude>
+			<amplitude>50</amplitude>
 			<frequency>1.5</frequency>
 			<speed>200</speed>
 		</behaviour>
@@ -55,7 +55,7 @@
 		<life>200</life>
 		<weapons/>
 		<behaviour name="sine">
-			<amplitude>5</amplitude>
+			<amplitude>50</amplitude>
 			<frequency>1.5</frequency>
 			<speed>200</speed>
 		</behaviour>

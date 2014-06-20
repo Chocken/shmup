@@ -31,14 +31,16 @@ class PlayState : public GameState
 			return &m_PlayState;
 		}
 
-		bool levelFinished;
+		
 		bool bossDestroyed;
+		bool playerDestroed;
 		
 	protected:
 		
 		PlayState();
 		
 	private:
+		bool levelFinished;
 		static PlayState m_PlayState;
 		Level level; 
 		Timer fadeTimer;

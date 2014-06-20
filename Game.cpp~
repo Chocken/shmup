@@ -94,12 +94,17 @@ void Game::HandleEvents()
 
 void Game::Update()
 {
-	timer.start();	
-	if( timer.get_ticks() < (1000 / FRAMES_PER_SECOND) ) 
-	{
-		SDL_Delay( ( 1000 / FRAMES_PER_SECOND ) - timer.get_ticks());		
-	}
+	timer.start();
 	states.back()->Update(this);	
+	
+	if( timer.get_ticks() < 1000 / FRAMES_PER_SECOND) 
+	{
+		//std::cout<< "timer: " << timer.get_ticks() << " desired frames: " << (1000 / FRAMES_PER_SECOND) << std::endl;
+		//std::cout << "Delaying By " << ( 1000 / FRAMES_PER_SECOND ) - timer.get_ticks()<< std::endl;
+		SDL_Delay( ( 1000 / FRAMES_PER_SECOND ) - timer.get_ticks());								
+	}
+	std:: cout << "Frame took " << timer.get_ticks() << "msecs" << std::endl;
+
 }
 
 void Game::Draw()

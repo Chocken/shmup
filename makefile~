@@ -1,4 +1,4 @@
-OBJS = Program.o Game.o MenuState.o Sprite.o PlayState.o PauseState.o Background.o Timer.o DrawableObject.o BlackScreen.o PlayerShip.o Level.o Vector2D.o GameObjectFactory.o Explosion.o CollisionDetector.o Rectangle.o Circle.o StraightProjectile.o ProjectileFactory.o BasicEnemy.o ExplosionFactory.o GamePlayObject.o SineBehaviour.o StraightWeapon.o VerticalLineBehaviour.o SplineBehaviour.o MathsHelper.o TextRenderer.o LazerWeapon.o SpreadWeapon.o SpreadWeapon2.o SpecFactory.o Enemy.o LogoState.o IntroState.o BossBehaviourOne.o ContinueState.o
+OBJS = Program.o Game.o MenuState.o Sprite.o PlayState.o PauseState.o Background.o Timer.o DrawableObject.o BlackScreen.o PlayerShip.o Level.o Vector2D.o GameObjectFactory.o Explosion.o CollisionDetector.o Rectangle.o Circle.o StraightProjectile.o ProjectileFactory.o BasicEnemy.o ExplosionFactory.o GamePlayObject.o SineBehaviour.o StraightWeapon.o VerticalLineBehaviour.o SplineBehaviour.o MathsHelper.o TextRenderer.o LazerWeapon.o SpreadWeapon.o SpreadWeapon2.o SpecFactory.o Enemy.o LogoState.o IntroState.o BossBehaviourOne.o ContinueStat.o
 
 CC = g++ -std=c++0x
 
