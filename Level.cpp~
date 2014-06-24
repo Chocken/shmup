@@ -80,8 +80,7 @@ void Level::HandleEvents(SDL_Event event, Game* game)
 }
 
 void Level::Update()
-{		
-	printf("level update\n");
+{			
 	background.Update(timer.get_ticks());
 
 	if(GameObjects::Instance()->playerShip.isActive)

@@ -30,8 +30,7 @@ void Level::Init(int levelno)
 	storedLives = GameObjects::Instance()->PlayerLives;
 	storedScore = GameObjects::Instance()->PlayerScore;
 	lives.SetText("REST: " + std::to_string(GameObjects::Instance()->PlayerLives));
-	score.SetText("SCORE: " + std::to_string(GameObjects::Instance()->PlayerScore));
-	std::cout << "score: " <<GameObjects::Instance()->PlayerScore <<std::endl;	
+	score.SetText("SCORE: " + std::to_string(GameObjects::Instance()->PlayerScore));	
 	timer.start();
 	explosionTimer.start();
 }

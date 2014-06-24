@@ -12,7 +12,7 @@
 		<explFactoryHeight>30</explFactoryHeight>
 		<startingLocationX>300</startingLocationX>
 		<startingLocationY>-200</startingLocationY>
-		<life>10000</life>
+		<life>5000</life>
 		<weapons>
 			<weapon>STRAIGHT</weapon>
 			<weapon>SPREAD</weapon>

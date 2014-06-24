@@ -42,6 +42,8 @@ void GameObjectFactory::Clean()
 		Mix_FreeChunk(soundIter->second);		
 		++soundIter;
 	}
+	enemyData.clear();
+	enemyDataMap.clear();
 }
 
 Background GameObjectFactory::CreateBackground()
@@ -181,11 +183,11 @@ void GameObjectFactory::Update(float scrollDistance)
 	std::map<float,EnemySpec>::iterator enemyIter=enemyData.begin();
 	while(enemyIter != enemyData.end())
 	{		
-		if (scrollDistance > enemyIter->first)
+		if ((scrollDistance > enemyIter->first) && (!enemyIter->second.created))
 		{		
 			Enemy* enemy = CreateEnemy(enemyIter->second);
 			GameObjects::Instance()->enemies.push_back(enemy);					
-			enemyData.erase(enemyIter++);				
+			enemyIter->second.created = true;				
 		}
 		else
 		{
@@ -209,7 +211,8 @@ void GameObjectFactory::GetEnemySpec(std::string fileName)
 	{
 		xml_attribute<> *timeAttr = pSubNode->first_attribute("time");
 
-		EnemySpec spec;		
+		EnemySpec spec;
+		spec.created = false;		
 		spec.sprite = pSubNode->first_attribute("sprite")->value();
 		spec.explosionSound = pSubNode->first_attribute("explosionSound")->value();
 		spec.explosionSprite = pSubNode->first_attribute("explosionSprite")->value();
@@ -261,8 +264,7 @@ void GameObjectFactory::GetEnemySpec(std::string fileName)
 			spec.speed = atof(behaviour->first_node("speed")->value());		
 		}		
 		
-		enemyData[atof(timeAttr->value())] = spec;
-
+		enemyData[atof(timeAttr->value())] = spec;		
 	}
 	
 }
