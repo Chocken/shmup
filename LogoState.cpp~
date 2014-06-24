@@ -6,7 +6,6 @@ LogoState LogoState::m_LogoState;
 void LogoState::Init()
 {
 	blackScreen = BlackScreen(300);
-	blackScreen.SetToFadeIn();
 	blackScreen.sprite = Sprite::Load(const_cast<char *>("blackScreen.png"), false);
 	logo = Sprite::Load(const_cast<char *>("pretendlogo.png"), false);
 	waitTimer.start();

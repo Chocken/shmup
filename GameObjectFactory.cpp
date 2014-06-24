@@ -17,13 +17,14 @@
 #include <memory>
 using namespace rapidxml;
 
+GameObjectFactory::GameObjectFactory(){}
+
 void GameObjectFactory::Init(std::string assetsfile, std::string enemyDataFile)
 {	
 	Mix_Chunk* smallExplosion = Mix_LoadWAV("explosion.wav");	
 	soundMap["smallExplosion"] = smallExplosion;
 	GetEnemySpec("leveldata/" + enemyDataFile);
-	GetAssets("leveldata/" + assetsfile);
-	std::map<float,std::vector<std::string>>::iterator iter=enemyDataMap.begin();
+	GetAssets("leveldata/" + assetsfile);		
 }
 
 void GameObjectFactory::Clean()
@@ -261,6 +262,7 @@ void GameObjectFactory::GetEnemySpec(std::string fileName)
 		}		
 		
 		enemyData[atof(timeAttr->value())] = spec;
+
 	}
 	
 }

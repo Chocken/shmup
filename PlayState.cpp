@@ -6,27 +6,31 @@
 #include "LevelFactory.h"
 #include "MenuState.h"
 #include "ContinueState.h"
+#include "GameObjects.h"
 #include <iostream>
 
 PlayState PlayState::m_PlayState;
 TextRenderer PlayState::textRenderer;
 
-PlayState::PlayState() : levelFinished(false), bossDestroyed(false)
+PlayState::PlayState()
 {
 }
 
 void PlayState::Init()
 {
-	levelFinished = false;	
-	level.Init(2);
+	playerDestroyed = false;
+	bossDestroyed = false;		
+	level.Init(GameObjects::Instance()->CurrentLevel);	
 	blackScreen = BlackScreen(1000);
+	blackScreen.SetToFadeIn();
 	blackScreen.sprite = Sprite::Load(const_cast<char *>("blackScreen.png"), false);
 	SDL_Color textColor = { 255, 255, 255 };
 	textRenderer = TextRenderer(const_cast<char *>("manaspc.ttf"),28, textColor);
+	statePhase = PLAY;
 }
 
 void PlayState::Clean()
-{
+{	
 	level.Clean();
 	blackScreen.Clear();
 }
@@ -56,7 +60,8 @@ void PlayState::HandleEvents(Game* game)
 			switch(event.key.keysym.sym)
 			{
 				case SDLK_RETURN:
-					levelFinished = true;															
+					game->ChangeState(MenuState::Instance());
+																			
 					break;
 			}
 		}
@@ -65,32 +70,40 @@ void PlayState::HandleEvents(Game* game)
 }
 
 void PlayState::Update(Game* game) 
-{	
-	level.Update();	
+{
 
-	if(bossDestroyed == true)
+	blackScreen.Update(fadeTimer.get_ticks());
+	level.Update();
+
+	
+	if((bossDestroyed || playerDestroyed) && statePhase == PLAY)
 	{
+		
 		endTimer.start();
-		bossDestroyed = false;		
+		statePhase = ENDING;		
+	}	
+
+	if(endTimer.get_ticks() > 2000 && statePhase == ENDING) 
+	{		
+		endTimer.reset();
+		statePhase = DONE;
+		blackScreen.SetToFadeOut();	
 	}
 
-	if(playerDestroyed == true)
-	{
-		endTimer.start();
-		playerDestroyed = false;		
-	}
-
-	if(endTimer.get_ticks() > 5000) 
+	if(statePhase == DONE)
 	{		
-		levelFinished = true;
-		endTimer.reset();	
-	}
-	if(levelFinished == true)
-	{		
-		blackScreen.Update(fadeTimer.get_ticks());
 		if(blackScreen.FullAlpha())
-		{						
-			game->ChangeState(ContinueState::Instance());			
+		{
+			blackScreen.Clear();
+			if(playerDestroyed)
+			{						
+				game->ChangeState(ContinueState::Instance());
+			}
+			else if(bossDestroyed)
+			{				
+				GameObjects::Instance()->CurrentLevel++;
+				game->ChangeState(PlayState::Instance());
+			}			
 		}		
 	}
 	fadeTimer.start();

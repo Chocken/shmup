@@ -11,6 +11,13 @@
 
 #include <list>
 
+enum StatePhase
+{
+	PLAY,
+	ENDING,
+	DONE
+};
+
 class PlayState : public GameState
 {
 	public:
@@ -40,7 +47,7 @@ class PlayState : public GameState
 		PlayState();
 		
 	private:
-		bool levelFinished;
+		StatePhase statePhase;		
 		static PlayState m_PlayState;
 		Level level; 
 		Timer fadeTimer;

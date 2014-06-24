@@ -17,7 +17,8 @@
 GameObjects GameObjects::m_GameObjects;
 
 void Level::Init(int levelno)
-{		
+{
+	objFactory = GameObjectFactory();		
 	objFactory.Init("assets"+boost::lexical_cast<std::string>(levelno)+".xml","enemies"+boost::lexical_cast<std::string>(levelno)+".xml");
 	background = objFactory.CreateBackground();
 	PlayerShip playerShip = objFactory.CreatePlayerShip();
@@ -79,8 +80,7 @@ void Level::HandleEvents(SDL_Event event, Game* game)
 }
 
 void Level::Update()
-{		
-
+{			
 	background.Update(timer.get_ticks());
 
 	if(GameObjects::Instance()->playerShip.isActive)

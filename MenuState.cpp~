@@ -16,7 +16,7 @@ void MenuState::Init()
 	SDL_Color textColor = { 255, 255, 255 };
 	textRenderer = TextRenderer(const_cast<char *>("manaspc.ttf"),28, textColor);
 	timer.start();
-	GameObjects::Instance()->CurrentLevel = 1;
+	GameObjects::Instance()->CurrentLevel = 2;
 	GameObjects::Instance()->PlayerLives = 2;
 	GameObjects::Instance()->PlayerContinues = 2;
 	GameObjects::Instance()->PlayerScore = 0;

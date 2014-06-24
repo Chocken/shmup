@@ -28,6 +28,7 @@ using namespace rapidxml;
 class GameObjectFactory
 {
 	public:
+		GameObjectFactory();
 		void Init(std::string assetsfile, std::string enemyDataFile);
 		void QueueExplosion(Vector2D location);				
 		Background CreateBackground();

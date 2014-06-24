@@ -54,8 +54,9 @@ void Game::Init(const char* title, int width, int height,
 
 void Game::ChangeState(GameState* state)
 {
+	
 	if(!states.empty())
-	{
+	{		
 		states.back()->Clean();
 		states.pop_back();		
 	}

@@ -2,6 +2,8 @@
 #include <string>
 #include "ContinueState.h"
 #include "MenuState.h"
+#include "PlayState.h"
+#include "GameObjects.h"
 
 ContinueState ContinueState::m_ContinueState;
 
@@ -11,7 +13,8 @@ ContinueState::ContinueState() : secondsLeft(10)
 
 void ContinueState::Init()
 {	
-	blackScreen = BlackScreen(1000, true);
+	blackScreen = BlackScreen(1000);
+	blackScreen.SetBlack();
 	blackScreen.sprite = Sprite::Load(const_cast<char *>("blackScreen.png"), false);
 	SDL_Color textColor = { 255, 255, 255 };
 	continueMessage = TextRenderer(const_cast<char *>("manaspc.ttf"),28, textColor);
@@ -49,7 +52,9 @@ void ContinueState::HandleEvents(Game* game)
 			case SDL_KEYDOWN:
 			switch(event.key.keysym.sym)
 			{
-				case SDLK_RETURN:																				
+				case SDLK_RETURN:
+					game->ChangeState(PlayState::Instance());
+					GameObjects::Instance()->PlayerLives = 2;																		
 					break;
 			}
 		}

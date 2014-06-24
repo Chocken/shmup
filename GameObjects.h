@@ -22,7 +22,10 @@ class GameObjects
 		PlayerShip playerShip;
 
 		int PlayerLives;
+		int PlayerContinues;
 		long PlayerScore;
+		int CurrentLevel;
+		
 		
 	private:
 		static GameObjects m_GameObjects;

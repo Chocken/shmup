@@ -1,85 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <enemies>
-	<enemy time="200" sprite="enemy1" explosionSound="smallExplosion" explosionSprite="smallexplosion" collisionType="CIRC" boss="0" scoreValue = "100">
-		<width>45</width>
-		<height>35</height>
-		<collisionWidth>30</collisionWidth>
-		<collisionHeight>30</collisionHeight>
-		<collisionOffsetX>0</collisionOffsetX>
-		<collisionOffsetY>0</collisionOffsetY>
+	<enemy time="200" sprite="boss1" explosionSound="smallExplosion" explosionSprite="smallexplosion" collisionType="RECT" boss="1" scoreValue = "100">
+		<width>243</width>
+		<height>140</height>
+		<collisionWidth>200</collisionWidth>
+		<collisionHeight>60</collisionHeight>
+		<collisionOffsetX>25</collisionOffsetX>
+		<collisionOffsetY>35</collisionOffsetY>
 		<explFactoryFrames>10</explFactoryFrames>
 		<explFactoryWidth>30</explFactoryWidth>
 		<explFactoryHeight>30</explFactoryHeight>
-		<startingLocationX>200</startingLocationX>
+		<startingLocationX>300</startingLocationX>
 		<startingLocationY>-200</startingLocationY>
-		<life>200</life>
-		<weapons/>
-		<behaviour name="sine">
-			<amplitude>5</amplitude>
-			<frequency>1.5</frequency>
-			<speed>200</speed>
-		</behaviour>
-	</enemy>
-	<enemy time="275" sprite="enemy1" explosionSound="smallExplosion" explosionSprite="smallexplosion" collisionType="CIRC" boss="0" scoreValue = "100">
-		<width>45</width>
-		<height>35</height>
-		<collisionWidth>30</collisionWidth>
-		<collisionHeight>30</collisionHeight>
-		<collisionOffsetX>0</collisionOffsetX>
-		<collisionOffsetY>0</collisionOffsetY>
-		<explFactoryFrames>10</explFactoryFrames>
-		<explFactoryWidth>30</explFactoryWidth>
-		<explFactoryHeight>30</explFactoryHeight>
-		<startingLocationX>200</startingLocationX>
-		<startingLocationY>-200</startingLocationY>
-		<life>200</life>
-		<weapons/>
-		<behaviour name="sine">
-			<amplitude>5</amplitude>
-			<frequency>1.5</frequency>
-			<speed>200</speed>
-		</behaviour>
-	</enemy>
-	<enemy time="350" sprite="enemy1" explosionSound="smallExplosion" explosionSprite="smallexplosion" collisionType="CIRC" boss="0" scoreValue = "100">
-		<width>45</width>
-		<height>35</height>
-		<collisionWidth>30</collisionWidth>
-		<collisionHeight>30</collisionHeight>
-		<collisionOffsetX>0</collisionOffsetX>
-		<collisionOffsetY>0</collisionOffsetY>
-		<explFactoryFrames>10</explFactoryFrames>
-		<explFactoryWidth>30</explFactoryWidth>
-		<explFactoryHeight>30</explFactoryHeight>
-		<startingLocationX>200</startingLocationX>
-		<startingLocationY>-200</startingLocationY>
-		<life>200</life>
-		<weapons/>
-		<behaviour name="sine">
-			<amplitude>5</amplitude>
-			<frequency>1.5</frequency>
-			<speed>200</speed>
-		</behaviour>
-	</enemy>	
-	<enemy time="500" sprite="enemy1" explosionSound="smallExplosion" explosionSprite="smallexplosion" collisionType="CIRC" boss="0" scoreValue = "100">
-		<width>45</width>
-		<height>35</height>
-		<collisionWidth>30</collisionWidth>
-		<collisionHeight>30</collisionHeight>
-		<collisionOffsetX>0</collisionOffsetX>
-		<collisionOffsetY>0</collisionOffsetY>
-		<explFactoryFrames>10</explFactoryFrames>
-		<explFactoryWidth>30</explFactoryWidth>
-		<explFactoryHeight>30</explFactoryHeight>
-		<startingLocationX>200</startingLocationX>
-		<startingLocationY>-200</startingLocationY>
-		<life>200</life>
-		<weapons/>
-		<behaviour name="spline">
-			<p0 x="100" y="-200"/>
-			<p1 x="200" y="-100"/>
-			<p2 x="400" y="900"/>
-			<p3 x="600" y="1000"/>
-			<speed>0.2</speed>
-		</behaviour>
+		<life>10000</life>
+		<weapons>
+			<weapon>STRAIGHT</weapon>
+			<weapon>SPREAD</weapon>
+		</weapons>
+		<behaviour name="boss1"/>
 	</enemy>
 </enemies>

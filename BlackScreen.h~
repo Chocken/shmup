@@ -23,7 +23,6 @@ class BlackScreen : public DrawableObject
 		void Clear();
 		void SetToFadeOut();
 		void SetToFadeIn();
-		void SetBlack();
 		
 
 	private:
